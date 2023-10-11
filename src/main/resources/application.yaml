@@ -1,0 +1,12 @@
+logging:
+  level:
+    com.Library.LibraryApplication.controller.BookController: DEBUG
+#    root: DEBUG
+# logging:
+#   logback:
+#     rollingPolicy:
+#       max-size-file: 5KB
+#
+#logging:
+#  level:
+#    debug: ERROR
