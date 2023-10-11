@@ -21,9 +21,9 @@ public class Author {
 	@Column(name = "description", length = 250)
 	private String description;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REMOVE }, mappedBy = "authors")
-	private List<Book> books ;
+//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+//			CascadeType.REMOVE }, mappedBy = "authors")
+//	private List<Book> books ;
 
 
 	public Author(Long id, String name, String description) {

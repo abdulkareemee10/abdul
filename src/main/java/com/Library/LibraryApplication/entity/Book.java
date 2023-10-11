@@ -64,12 +64,10 @@ public class Book {
 
 	public void addAuthors(Author authors) {
 		this.authors.add(authors);
-		authors.getBooks().add(this);
 	}
 
 	public void removeAuthors(Author authors) {
 		this.authors.remove(authors);
-		authors.getBooks().remove(this);
 	}
 
 	public void addCategories(Category categories) {
