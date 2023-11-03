@@ -42,6 +42,7 @@ public class BookImpl implements BookRepository {
 	private static final String DELETE_BOOK_BY_ID_QUERY = "DELETE FROM BOOKS WHERE ID =?";
 	private static final String GET_BOOK_QUERY = "SELECT * FROM BOOKS ";
 
+
 	private static final String INSERT_BOOK_AUTHOR_QUERY = "INSERT INTO books_authors (book_id, author_id) VALUES (?, ?)";
 	private static final String INSERT_BOOK_CATEGORY_QUERY = "INSERT INTO books_categories (book_id, category_id) VALUES (?, ?)";
 	private static final String INSERT_BOOK_PUBLISHER_QUERY = "INSERT INTO books_publishers (book_id, publisher_id) VALUES (?, ?)";
@@ -49,8 +50,11 @@ public class BookImpl implements BookRepository {
 
 	private static final String GET_BOOK_AUTHOR_BY_BOOKID_QUERY = "SELECT author_id FROM books_authors WHERE book_id=?";
 
-	
-	
+	private static final String GET_BOOK_PUBLISHER_BY_BOOKID_QUERY = "SELECT publisher_id FROM books_publishers WHERE book_id=?";
+
+	private static final String GET_BOOK_CATEGORY_BY_BOOKID_QUERY = "SELECT category_id FROM books_categories WHERE book_id=?";
+
+
 	// private static final String GET_LIBRARY = "SELECT * FROM BOOKS,CATEGORIES,
 	// AUTHORS, PUBLISHER WHERE 1 = 1 AND BOOKS.ID = CATEGORIES.ID, AND BOOKS.ID =
 	// AUTHORS.ID, AND BOOKS.ID = PUBISHERS.ID ";
@@ -173,118 +177,107 @@ public class BookImpl implements BookRepository {
 	@Override
 	public Book getById(long id) {
 
-		String getAllListQuery = "" + "SELECT" + "BOOKS.*," + "AUTHORS.*," + "CATEGORIES.*," + "PUBLISHERS.*," + "FROM"
-				+ "BOOKS" + "AUTHORS" + "CATEGORIES" + "PUBLISHERS" + "WHERE" + "BOOKS.BOOKS_ID = AUTHORS.AUTHORS_ID"
-				+ " OR BOOKS.BOOKS_ID = PUBLISHERS.PUBLISHERS_ID" + "OR BOOKS.BOOKS_ID = CATEGORIES.CATEGORIES_ID";
-		// System.out.println(""+getAllListQuery);
-		return (Book) jdbcTemplate.query(getAllListQuery, new ResultSetExtractor<List<Book>>() {
-			@Override
-			public List<Book> extractData(ResultSet rs) throws SQLException, DataAccessException {
-				List<Book> list = new ArrayList<Book>();
-				Map<Long, Book> bookMap = new HashMap<Long, Book>();
-				Map<Long, Author> authorMap = new HashMap<Long, Author>();
-				Map<Long, Category> categoryMap = new HashMap<Long, Category>();
-				Map<Long, Publisher> publisherMap = new HashMap<Long, Publisher>();
-				while (rs.next()) {
-					Long bookKey = rs.getLong("book_id");
-					Book book1 = bookMap.get(bookKey);
-					if (book1 == null) {
-						book1 = new Book();
-						bookMap.put(id, book1);
-						list.add(book1);
-						book1.setName(rs.getString("id"));
-						book1.setIsbn(rs.getString("isbn"));
+		Book bookreturn =  jdbcTemplate.queryForObject(GET_BOOK_BY_ID_QUERY, (rs, rowNum) -> {
+			return new Book(rs.getLong("id"), rs.getString("name"), rs.getString("isbn"), rs.getString("description"));
+		}, id);
 
-//                        books.setAuthors(rs.getString("authors"));
-						// books.setCategories(rs.getString("categories"));
-						// books.setPublishers(rs.getString("publishers"));
 
-					}
+		List<Long> authorIds = getBookAuthorsByBookId(bookreturn.getId());
+		List<Author> authorList = new ArrayList<>();
+		for (Long authorId : authorIds) {
+			Author author = authorRepository.getById(authorId);
+			authorList.add(author);
+		}
+		bookreturn.setAuthors(authorList);
 
-					long authorId = rs.getLong("id");
-					Author author = authorMap.get(authorId);
-					if (author == null) {
-						author = new Author();
-						if (book1.getAuthors() == null)
-							book1.setAuthors((List<Author>) new Author());
-						// if(book1.getAuthors().getAUthorsList() == null)
-						// book1.setAuthors().setAuthorsList(new ArrayList<Author>());
-						// book1.getAuthors().getAuthorsList().add(author);
-						authorMap.put(authorId, author);
-						author.setId(authorId);
-						author.setName(rs.getString("name"));
-						author.setDescription(rs.getString("description"));
 
-					}
 
-					long categoryId = rs.getLong("id");
-					Category category = categoryMap.get(categoryId);
-					if (category == null) {
-						category = new Category();
-						if (book1.getCategories() == null)
-							book1.setCategories((List<Category>) new Category());
-						// if(book1.setCategories().setCategoriesList() == null)
-						// book1.setCategories().setCategoriesList(new ArrayList<Category>());
-						// book1.getCategories().getCategoriesList().add(category);
-						categoryMap.put(categoryId, category);
-						category.setId(categoryId);
-						category.setName(rs.getString("name"));
-					}
+		List<Long> publisherIds = getBookPublishersByBookId(bookreturn.getId());
+		List<Publisher> publisherList = new ArrayList<>();
+		for (Long publisherId : publisherIds) {
+			Publisher publisher = publisherRepository.getById(publisherId);
+			publisherList.add(publisher);
+		}
+		bookreturn.setPublishers(publisherList);
 
-					long publisherId = rs.getLong("id");
-					Publisher publisher = publisherMap.get(publisherId);
-					if (publisher == null) {
-						publisher = new Publisher();
-						if (book1.getPublishers() == null)
-							book1.setPublishers((List<Publisher>) new Publisher());
-						// if(book1.setPublishers().setPublishersList() == null)
-						// book1.setPublishers().setPublishersList(new ArrayList<Publisher>());
-						// book1.getPublishers().getPublishersList().add(publisher);
-						publisherMap.put(publisherId, publisher);
-						publisher.setId(publisherId);
-						publisher.setName(rs.getString("name"));
-					}
-				}
 
-				return list;
 
-			}
-		});
-	}
+		List<Long> categoryIds = getBookCategoriesByBookId(bookreturn.getId());
+		List<Category> categoryList = new ArrayList<>();
+		for (Long categoryId : categoryIds) {
+			Category category = categoryRepository.getById(categoryId);
+
+			categoryList.add(category);
+		}
+		bookreturn.setCategories(categoryList);
+
+
+
+
+
+		return bookreturn;
+}
+
+
+
 
 	@Override
 	public List<Book> allBooks() {
-		
+
 		List<Book> bookResponse = new ArrayList<>();
 		//get all books
 		List<Book> bookList = jdbcTemplate.query(GET_BOOK_QUERY, (rs, rowNum) -> {
 			return new Book(rs.getLong("id"), rs.getString("name"), rs.getString("isbn"), rs.getString("description"));
 		});
-		
+
 		//loop through the books
 		for(Book book: bookList) {
-			
+
 			//for authors List
 			List<Long> authorIds = getBookAuthorsByBookId(book.getId());
-			List<Author> authorList =  new ArrayList<>();
-			for(Long authorId : authorIds) {
+			List<Author> authorList = new ArrayList<>();
+			for (Long authorId : authorIds) {
 				Author author = authorRepository.getById(authorId);
 				authorList.add(author);
 			}
 			book.setAuthors(authorList);
-			
+
+
+
+
+			List<Long> publisherIds = getBookPublishersByBookId(book.getId());
+			List<Publisher> publisherList = new ArrayList<>();
+			for (Long publisherId : publisherIds) {
+				Publisher publisher = publisherRepository.getById(publisherId);
+				publisherList.add(publisher);
+			}
+			book.setPublishers(publisherList);
+
+
+
+			List<Long> categoryIds = getBookCategoriesByBookId(book.getId());
+			List<Category> categoryList = new ArrayList<>();
+			for (Long categoryId : categoryIds) {
+				Category category = categoryRepository.getById(categoryId);
+
+				categoryList.add(category);
+			}
+			book.setCategories(categoryList);
+
+
 			//for catgories List
-			
-			
+
+
 			//for publishers List
-			
-			
-			
+
+
+
 			bookResponse.add(book);
 		}
-		
+
 		return bookResponse;
 	}
+
 
 	@Override
 	public Book getByIsbnNameDescription(String isbn, String name, String description) {
@@ -296,7 +289,11 @@ public class BookImpl implements BookRepository {
 	public List<Long> getBookAuthorsByBookId(Long bookId){
 		return jdbcTemplate.queryForList(GET_BOOK_AUTHOR_BY_BOOKID_QUERY, Long.class, bookId);
 	}
-
-
+	public List<Long> getBookCategoriesByBookId(Long bookId){
+		return jdbcTemplate.queryForList(GET_BOOK_CATEGORY_BY_BOOKID_QUERY, Long.class, bookId);
+	}
+	public List<Long> getBookPublishersByBookId(Long bookId){
+		return jdbcTemplate.queryForList(GET_BOOK_PUBLISHER_BY_BOOKID_QUERY, Long.class, bookId);
+	}
 
 }

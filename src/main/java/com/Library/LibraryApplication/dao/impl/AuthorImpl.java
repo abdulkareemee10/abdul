@@ -54,10 +54,13 @@ public class AuthorImpl implements AuthorRepository {
     @Override
     public Author getById(long id) {
 
-        return jdbcTemplate.queryForObject(GET_AUTHOR_BY_ID_QUERY, (rs, rowNum) -> {
-            return new Author(rs.getLong("id"),rs.getString("name"), rs.getString("description"));
+        Author author1 =  jdbcTemplate.queryForObject(GET_AUTHOR_BY_ID_QUERY, (rs, rowNum) -> {
+            return new Author (rs.getLong("id"), rs.getString("name"), rs.getString("description"));
         }, id);
+        return author1;
     }
+
+
 
     @Override
     public List<Author> allAuthors() {

@@ -1,0 +1,32 @@
+2023-10-13 16:52:40,802 7442 [main] INFO  c.L.L.LibraryApplication - Starting LibraryApplication using Java 17.0.8 with PID 5300 (C:\Users\USER\IdeaProjects\LibraryApplication\target\classes started by USER in C:\Users\USER\IdeaProjects\LibraryApplication)
+2023-10-13 16:52:40,819 7459 [main] INFO  c.L.L.LibraryApplication - No active profile set, falling back to 1 default profile: "default"
+2023-10-13 16:52:46,571 13211 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-13 16:52:46,696 13336 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 91 ms. Found 0 JPA repository interfaces.
+2023-10-13 16:52:50,804 17444 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2023-10-13 16:52:50,835 17475 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2023-10-13 16:52:50,843 17483 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-10-13 16:52:50,844 17484 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-10-13 16:52:51,416 18056 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-10-13 16:52:51,419 18059 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 10104 ms
+2023-10-13 16:52:52,327 18967 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-13 16:52:52,669 19309 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-10-13 16:52:52,678 19318 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-10-13 16:52:53,501 20141 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-10-13 16:52:54,246 20886 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-13 16:52:54,362 21002 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-10-13 16:52:56,833 23473 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@49038f97
+2023-10-13 16:52:56,841 23481 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-10-13 16:52:58,929 25569 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-10-13 16:53:02,627 29267 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-13 16:53:05,627 32267 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-13 16:53:06,236 32876 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-13 16:53:07,766 34406 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2023-10-13 16:53:07,868 34508 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2023-10-13 16:53:07,898 34538 [main] INFO  c.L.L.LibraryApplication - Started LibraryApplication in 30.559 seconds (process running for 36.8)
+2023-10-13 16:54:08,901 95541 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-13 16:54:08,938 95578 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-10-13 16:54:08,958 95598 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 19 ms
+2023-10-13 16:58:25,480 352120 [http-nio-8080-exec-4] INFO  c.L.L.controller.BookController - book info is enabled
+2023-10-13 16:58:25,503 352143 [http-nio-8080-exec-4] DEBUG c.L.L.controller.BookController - book debug logging is enabled
+2023-10-13 17:14:21,872 1308512 [http-nio-8080-exec-1] INFO  c.L.L.controller.BookController - book info is enabled
+2023-10-13 17:14:21,873 1308513 [http-nio-8080-exec-1] DEBUG c.L.L.controller.BookController - book debug logging is enabled

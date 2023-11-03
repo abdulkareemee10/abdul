@@ -14,14 +14,14 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @PostMapping("/user")
+    @PostMapping("/saveuser")
     public String saveUser(@RequestBody User user) {
 
         return userRepository.saveUser(user);
 
     }
 
-    @PutMapping("/user")
+    @PutMapping("/edituser")
     public String updateUser(@RequestBody User user) {
 
         return userRepository.updateUser(user);

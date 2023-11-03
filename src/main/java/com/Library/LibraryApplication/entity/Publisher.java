@@ -19,9 +19,6 @@ public class Publisher {
 	@Column(name = "name", length = 100, unique = true)
 	private String name;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "publishers")
-	private List<Book> books ;
-
 
 	public Publisher(long id, String name) {
 		this.id=id;

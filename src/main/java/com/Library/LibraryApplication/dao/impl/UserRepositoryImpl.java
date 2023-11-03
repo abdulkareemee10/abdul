@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    private static final String INSERT_USER_QUERY = "INSERT INTO USER(id, name, surname, email) VALUES (?, ?, ?, ?)";
+    private static final String INSERT_USER_QUERY = "INSERT INTO USER(id, name, surname, password, email) VALUES (?, ?, ?, ?, ?)";
 
     private static final String UPDATE_USER_BY_ID_QUERY ="UPDATE USER SET name=? WHERE ID=?";
     private static final String GET_USER_BY_ID_QUERY="SELECT * FROM USER WHERE ID =?";
@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public String saveUser(User user) {
 
-        jdbcTemplate.update(INSERT_USER_QUERY,user.getId(),user.getName(), user.getSurname(), user.getEmail());
+        jdbcTemplate.update(INSERT_USER_QUERY,user.getId(),user.getName(), user.getSurname(), user.getEmail(),user.getPassword());
         return "user was  successfully added";
     }
 
@@ -51,7 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User getById(long id) {
 
         return jdbcTemplate.queryForObject(GET_USER_BY_ID_QUERY, (rs, rowNum) -> {
-            return new User(rs.getInt("id"),rs.getString("name"), rs.getString("surname"), rs.getString("email"));
+            return new User(rs.getLong("id") ,rs.getString("name"), rs.getString("surname"), rs.getString("email"), rs.getString("password"));
         }, id);
     }
 
@@ -60,7 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
 
 
         return jdbcTemplate.query(GET_USERS_QUERY, (rs, rowNum) -> {
-            return new User (rs.getInt("id"), rs.getString("name"), rs.getString("surname"), rs.getString("email"));
+            return new User (rs.getLong("id") , rs.getString("name"), rs.getString("surname"), rs.getString("email") ,rs.getString("password") );
         });
     }
 

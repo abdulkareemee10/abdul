@@ -62,32 +62,5 @@ public class Book {
 		this.publishers = publishers;
 	}
 
-	public void addAuthors(Author authors) {
-		this.authors.add(authors);
-	}
-
-	public void removeAuthors(Author authors) {
-		this.authors.remove(authors);
-	}
-
-	public void addCategories(Category categories) {
-		this.categories.add(categories);
-		categories.getBooks().add(this);
-	}
-
-	public void removeCategories(Category categories) {
-		this.categories.remove(categories);
-		categories.getBooks().remove(this);
-	}
-
-	public void addPublishers(Publisher publishers) {
-		this.publishers.add(publishers);
-		publishers.getBooks().add(this);
-	}
-
-	public void removePublishers(Publisher publishers) {
-		this.publishers.remove(publishers);
-		publishers.getBooks().remove(this);
-	}
 
 }

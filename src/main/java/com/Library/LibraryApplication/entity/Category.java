@@ -19,8 +19,7 @@ public class Category {
 	@Column(name = "name", length = 50,nullable = false, unique = true)
 	private String name;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "categories")
-	private List<Book> books ;
+
 
 
 	public Category(long id, String name) {

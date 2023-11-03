@@ -30,7 +30,7 @@ public class BookController {
 
     }
 
-    @PutMapping("/putbook")
+    @PutMapping("/putbook/{id}")
     public String updateBook(@RequestBody Book book) {
 
 
